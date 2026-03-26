@@ -6,27 +6,11 @@
     <meta name="description" content="Plano de 14 dias para emagrecer com apenas 15 minutos por dia — sem academia e sem dieta complicada." />
     <title>15 minutos por dia — plano para mulheres ocupadas</title>
     <link rel="stylesheet" href="styles.css" />
-    <!-- Meta Pixel (placeholder — substitua YOUR_PIXEL_ID) -->
-    <script>
-      !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function () {
-          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = "2.0";
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-      fbq("init", "1584330449533186");
-      fbq("track", "PageView");
-    </script>
+    <!--
+      Meta Pixel: script fica no final do <body> para o DOM existir antes de carregar.
+      Se aparecer "ERR_BLOCKED_BY_CLIENT" em fbevents.js = bloqueador de anúncios / Brave / extensão de privacidade — não é bug do site. Teste com extensões desativadas ou janela anônima sem extensões.
+      Erro em "host-additional-hooks-document-start.js" vem do Cursor/IDE ou extensão — não do projeto.
+    -->
     <noscript>
       <img height="1" width="1" style="display: none" src="https://www.facebook.com/tr?id=1584330449533186&ev=PageView&noscript=1" alt="" />
     </noscript>
@@ -85,6 +69,31 @@
       </div>
     </div>
 
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        t.onerror = function () {
+          console.info(
+            "[Meta Pixel] fbevents.js não carregou (bloqueador de anúncios ou rede). Eventos não serão enviados até o script carregar."
+          );
+        };
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+      fbq("init", "1584330449533186");
+      fbq("track", "PageView");
+    </script>
     <script src="script.js" defer></script>
   </body>
 </html>
