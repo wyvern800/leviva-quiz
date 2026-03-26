@@ -11,8 +11,16 @@
     console.log("[landing]", event, detail || {});
   }
 
+  /** Meta Pixel — só dispara se fbq existir (snippet no head). */
+  function pixelTrack() {
+    if (typeof fbq !== "function") return;
+    fbq.apply(null, arguments);
+  }
+
   function openModal(source) {
-    track("cta_click", { source: source || "unknown" });
+    var src = source || "unknown";
+    track("cta_click", { source: src });
+    pixelTrack("trackCustom", "LeadModalOpen", { source: src });
     modal.hidden = false;
     document.body.classList.add("modal-open");
     var firstInput = form.querySelector("input[name=email]");
@@ -59,6 +67,11 @@
     track("lead_submit", {
       hasEmail: !!emailTrim,
       hasWhatsapp: !!waTrim,
+    });
+
+    pixelTrack("track", "Lead", {
+      content_name: "Formulário landing",
+      content_category: "lead",
     });
 
     form.hidden = true;
