@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Challenge de 14 dias na app: missões diárias e um amigo virtual que te acompanha ao estilo Tamagotchi — lembretes, apoio e conversa. Conteúdo educativo."
+      content="App de auxílio no celular com um desafio de 14 dias: rotina leve, hábitos de movimento e alimentação para quem tem pouca disponibilidade. Conteúdo educativo."
     />
-    <title>Challenge de 14 dias — amigo virtual na app</title>
+    <title>Desafio de 14 dias — app de auxílio no celular</title>
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
@@ -16,9 +16,9 @@
       referrerpolicy="no-referrer"
     />
     <!--
-      Meta Pixel: o script está no fim do <body> para o DOM existir antes de carregar.
-      Se aparecer "ERR_BLOCKED_BY_CLIENT" em fbevents.js = bloqueador de anúncios / Brave / extensão de privacidade — não é erro do site. Testa com extensões desativadas ou janela anónima sem extensões.
-      Erro em "host-additional-hooks-document-start.js" vem do Cursor/IDE ou de uma extensão — não do projeto.
+      Meta Pixel: script no fim do <body> para o DOM existir antes de carregar.
+      ERR_BLOCKED_BY_CLIENT no fbevents.js = bloqueador de anúncios / extensão — não é bug do site.
+      host-additional-hooks-document-start.js = extensão/Cursor — não é do projeto.
     -->
     <noscript>
       <img height="1" width="1" style="display: none" src="https://www.facebook.com/tr?id=1584330449533186&ev=PageView&noscript=1" alt="" />
@@ -42,31 +42,31 @@
 
     <main class="page">
       <section class="hero" aria-labelledby="hero-title">
-        <p class="hero__eyebrow">Challenge de 14 dias · aplicação para telemóvel</p>
-        <h1 id="hero-title" class="hero__title">Um amigo virtual que te acompanha nestes 14 dias — ao estilo Tamagotchi</h1>
+        <p class="hero__eyebrow">Desafio de 14 dias · app de auxílio</p>
+        <h1 id="hero-title" class="hero__title">Uma rotina leve em 15 minutos por dia, mesmo com a agenda cheia</h1>
         <p class="hero__sub">
-          Entras num <strong>challenge de 14 dias</strong> na <strong>app</strong>: todos os dias tens <strong>missões simples</strong> e um <strong>amigo virtual</strong> ao estilo <strong>Tamagotchi</strong> — lembra-te de cuidar de ti, reage ao que fazes e conversa contigo quando precisares, com presença e aquele “vamos lá” de quem está do teu lado. Conteúdo educativo; cada experiência é única.
+          Participe de um <strong>desafio de 14 dias</strong> dentro de um <strong>aplicativo de auxílio</strong> no celular: passos simples para encaixar movimento e hábitos alimentares no seu dia, sem academia nem protocolos complicados — com acompanhamento dia a dia para manter o interesse e o ritmo. Conteúdo educativo — resultados variam conforme cada pessoa.
         </p>
-        <p class="hero__note">Informação geral; não substitui acompanhamento por um profissional de saúde.</p>
+        <p class="hero__note">Informação geral; não substitui acompanhamento por profissional de saúde.</p>
         <button type="button" class="btn btn--primary js-open-modal" data-cta="hero">Quero saber mais</button>
       </section>
 
       <section class="benefits" aria-labelledby="benefits-title">
-        <h2 id="benefits-title" class="section-title">O que é este challenge de 14 dias</h2>
+        <h2 id="benefits-title" class="section-title">Por que vale entrar nesse desafio de 14 dias</h2>
         <ul class="benefits__list">
-          <li>14 dias seguidos com missões curtas, feitas para caber na tua rotina</li>
-          <li>Auxílio contínuo como se fosse um amigo virtual: lembretes e conversa, sem formalidade</li>
-          <li>Presença ao estilo Tamagotchi — acompanha o teu ritmo e celebra os pequenos passos</li>
-          <li>Tudo no telemóvel: abres a app e o teu “companheiro” está lá</li>
+          <li>Duas semanas com meta clara — dá aquele gostinho de “vamos ver até onde eu consigo”</li>
+          <li>App de auxílio no celular, no seu ritmo, sem pressão de academia</li>
+          <li>Sem promessas milagrosas nem restrições extremas</li>
+          <li>Cerca de 15 minutos por dia e passos diretos, tudo dentro do app</li>
         </ul>
       </section>
 
       <section class="social-proof" aria-label="Contexto">
-        <p class="social-proof__text">Duas semanas para criar ritmo — com apoio que parece um amigo no bolso</p>
+        <p class="social-proof__text">14 dias para testar um novo ritmo — com apoio no bolso</p>
       </section>
 
       <section class="cta-block" aria-labelledby="cta-title">
-        <h2 id="cta-title" class="section-title">Queres receber mais pormenores?</h2>
+        <h2 id="cta-title" class="section-title">Quer receber mais detalhes?</h2>
         <button type="button" class="btn btn--primary btn--large js-open-modal" data-cta="footer">Receber informações</button>
       </section>
     </main>
@@ -75,8 +75,8 @@
       <div class="modal__backdrop js-close-modal" tabindex="-1"></div>
       <div class="modal__panel">
         <button type="button" class="modal__close js-close-modal" aria-label="Fechar">&times;</button>
-        <h2 id="modal-title" class="modal__title">Deixa o teu contacto</h2>
-        <p class="modal__hint">E-mail ou WhatsApp para te enviarmos informações sobre o challenge de 14 dias e a app.</p>
+        <h2 id="modal-title" class="modal__title">Deixe seu contato</h2>
+        <p class="modal__hint">E-mail ou WhatsApp para enviarmos informações sobre o desafio de 14 dias e o app.</p>
         <form class="lead-form" id="lead-form" novalidate>
           <label class="field">
             <span class="field__label">E-mail</span>
@@ -85,12 +85,12 @@
           <p class="field__or">ou</p>
           <label class="field">
             <span class="field__label">WhatsApp</span>
-            <input type="tel" name="whatsapp" class="field__input" inputmode="tel" autocomplete="tel" placeholder="+351 912 345 678" />
+            <input type="tel" name="whatsapp" class="field__input" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" />
           </label>
           <button type="submit" class="btn btn--primary btn--block">Continuar</button>
         </form>
         <div class="modal__success" id="modal-success" hidden>
-          <p class="modal__success-text">Recebemos o teu contacto. Em breve enviamos-te as próximas informações.</p>
+          <p class="modal__success-text">Recebemos seu contato. Em breve você recebe as próximas informações.</p>
           <button type="button" class="btn btn--secondary js-close-modal">Fechar</button>
         </div>
       </div>
@@ -112,7 +112,7 @@
         t.src = v;
         t.onerror = function () {
           console.info(
-            "[Meta Pixel] fbevents.js não carregou (bloqueador de anúncios ou rede). Os eventos só são enviados depois do script carregar."
+            "[Meta Pixel] fbevents.js não carregou (bloqueador ou rede). Eventos só serão enviados após o script carregar."
           );
         };
         s = b.getElementsByTagName(e)[0];

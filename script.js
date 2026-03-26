@@ -60,7 +60,7 @@
 
     if (!emailTrim && !waTrim) {
       track("lead_submit_blocked", { reason: "empty" });
-      alert("Indica o teu e-mail ou o número de WhatsApp.");
+      alert("Informe seu e-mail ou WhatsApp.");
       return;
     }
 
@@ -70,7 +70,7 @@
     });
 
     pixelTrack("track", "Lead", {
-      content_name: "Formulário — landing app telemóvel",
+      content_name: "Formulário — desafio 14 dias + app",
       content_category: "lead",
     });
 
