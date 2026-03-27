@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="App de auxílio no celular com um desafio de 14 dias: rotina leve, hábitos de movimento e alimentação para quem tem pouca disponibilidade. Conteúdo educativo."
+      content="Quiz rápido: descubra como o desafio de 14 dias e o app de auxílio podem se encaixar na sua rotina. Conteúdo educativo."
     />
-    <title>Desafio de 14 dias — app de auxílio no celular</title>
+    <title>Quiz — desafio de 14 dias · app de auxílio</title>
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
@@ -16,9 +16,9 @@
       referrerpolicy="no-referrer"
     />
     <!--
-      Meta Pixel: script no fim do <body> para o DOM existir antes de carregar.
-      ERR_BLOCKED_BY_CLIENT no fbevents.js = bloqueador de anúncios / extensão — não é bug do site.
-      host-additional-hooks-document-start.js = extensão/Cursor — não é do projeto.
+      Perguntas modeladas em funil tipo Fitfy (bem-estar). O link original retornou erro ao carregar aqui;
+      edite o array QUIZ_STEPS em quiz.js se tiver o roteiro oficial.
+      Meta Pixel no fim do body.
     -->
     <noscript>
       <img height="1" width="1" style="display: none" src="https://www.facebook.com/tr?id=1584330449533186&ev=PageView&noscript=1" alt="" />
@@ -40,35 +40,12 @@
       <div class="bg-gradient"></div>
     </div>
 
-    <main class="page">
-      <section class="hero" aria-labelledby="hero-title">
-        <p class="hero__eyebrow">Desafio de 14 dias · app de auxílio</p>
-        <h1 id="hero-title" class="hero__title">Uma rotina leve em 15 minutos por dia, mesmo com a agenda cheia</h1>
-        <p class="hero__sub">
-          Participe de um <strong>desafio de 14 dias</strong> dentro de um <strong>aplicativo de auxílio</strong> no celular: passos simples para encaixar movimento e hábitos alimentares no seu dia, sem academia nem protocolos complicados — com acompanhamento dia a dia para manter o interesse e o ritmo. Conteúdo educativo — resultados variam conforme cada pessoa.
-        </p>
-        <p class="hero__note">Informação geral; não substitui acompanhamento por profissional de saúde.</p>
-        <button type="button" class="btn btn--primary js-open-modal" data-cta="hero">Quero saber mais</button>
-      </section>
-
-      <section class="benefits" aria-labelledby="benefits-title">
-        <h2 id="benefits-title" class="section-title">Por que vale entrar nesse desafio de 14 dias</h2>
-        <ul class="benefits__list">
-          <li>Duas semanas com meta clara — dá aquele gostinho de “vamos ver até onde eu consigo”</li>
-          <li>App de auxílio no celular, no seu ritmo, sem pressão de academia</li>
-          <li>Sem promessas milagrosas nem restrições extremas</li>
-          <li>Cerca de 15 minutos por dia e passos diretos, tudo dentro do app</li>
-        </ul>
-      </section>
-
-      <section class="social-proof" aria-label="Contexto">
-        <p class="social-proof__text">14 dias para testar um novo ritmo — com apoio no bolso</p>
-      </section>
-
-      <section class="cta-block" aria-labelledby="cta-title">
-        <h2 id="cta-title" class="section-title">Quer receber mais detalhes?</h2>
-        <button type="button" class="btn btn--primary btn--large js-open-modal" data-cta="footer">Receber informações</button>
-      </section>
+    <main class="page page--quiz">
+      <p class="quiz-brand">Desafio de 14 dias · app de auxílio</p>
+      <div class="quiz-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do quiz">
+        <div class="quiz-progress__bar" id="quiz-progress-bar"></div>
+      </div>
+      <div id="quiz-root" class="quiz-root"></div>
     </main>
 
     <div class="modal" id="lead-modal" hidden aria-modal="true" role="dialog" aria-labelledby="modal-title">
@@ -123,6 +100,6 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/trianglify@4.1.1/dist/trianglify.bundle.js"></script>
     <script src="bg-effects.js"></script>
-    <script src="script.js" defer></script>
+    <script src="quiz.js" defer></script>
   </body>
 </html>
