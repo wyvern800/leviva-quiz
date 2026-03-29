@@ -160,9 +160,23 @@
     console.log("[quiz]", event, detail || {});
   }
 
+  /**
+   * Meta Pixel: usar o mesmo `this` que o Facebook espera (apply(null) pode falhar em alguns builds).
+   */
   function pixelTrack() {
-    if (typeof fbq !== "function") return;
-    fbq.apply(null, arguments);
+    var w = window;
+    var fn = w.fbq;
+    if (typeof fn !== "function") {
+      console.warn(
+        "[Pixel] fbq não encontrado — eventos não serão enviados. Causas comuns: bloqueador de anúncios (uBlock, Brave), extensão de privacidade, ou página aberta como file:// (use http://localhost ou HTTPS)."
+      );
+      return;
+    }
+    try {
+      fn.apply(fn, arguments);
+    } catch (err) {
+      console.warn("[Pixel] erro ao enviar evento:", err);
+    }
   }
 
   function setProgress(phase) {
@@ -390,10 +404,15 @@
         quiz_answers: answers,
       });
 
+      /* Lead = evento padrão do Meta; só aqui após contato válido (não basta clicar em "Tenho interesse"). */
       pixelTrack("track", "Lead", {
-        content_name: "Quiz — desafio 14 dias + interesse",
-        content_category: "lead",
+        content_name: "Quiz desafio 14 dias",
+        currency: "BRL",
+        value: 1,
       });
+      console.info(
+        "[Pixel] Evento Lead enviado para a fila do pixel. Confira em: Events Manager → Testar eventos (ou aguarde alguns minutos no relatório)."
+      );
 
       form.hidden = true;
       successEl.hidden = false;
@@ -402,4 +421,16 @@
 
   initModal();
   renderQuestion();
+
+  window.addEventListener("load", function () {
+    if (typeof window.fbq !== "function") {
+      console.warn(
+        "[Pixel] Após o carregamento: fbq ainda ausente. Sem o script connect.facebook.net, leads não contam no Meta."
+      );
+    } else {
+      console.info(
+        "[Pixel] Script do Meta carregado. O evento Lead só aparece depois de enviar o formulário com e-mail ou WhatsApp."
+      );
+    }
+  });
 })();
