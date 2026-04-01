@@ -53,16 +53,15 @@
       <div class="modal__panel">
         <button type="button" class="modal__close js-close-modal" aria-label="Fechar">&times;</button>
         <h2 id="modal-title" class="modal__title">Deixe seu contato</h2>
-        <p class="modal__hint">E-mail ou WhatsApp para enviarmos informações sobre o desafio de 14 dias e o app.</p>
-        <form class="lead-form" id="lead-form" novalidate>
+        <p class="modal__hint">Informe e-mail e WhatsApp — os dois são obrigatórios para enviarmos o próximo passo sobre o desafio de 14 dias e o app.</p>
+        <form class="lead-form" id="lead-form">
           <label class="field">
             <span class="field__label">E-mail</span>
-            <input type="email" name="email" class="field__input" autocomplete="email" placeholder="nome@email.com" />
+            <input type="email" name="email" class="field__input" autocomplete="email" placeholder="nome@email.com" required />
           </label>
-          <p class="field__or">ou</p>
           <label class="field">
             <span class="field__label">WhatsApp</span>
-            <input type="tel" name="whatsapp" class="field__input" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" />
+            <input type="tel" name="whatsapp" class="field__input" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" required />
           </label>
           <button type="submit" class="btn btn--primary btn--block">Continuar</button>
         </form>

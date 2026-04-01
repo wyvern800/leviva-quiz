@@ -23,7 +23,10 @@
         { text: "Barriga e cintura", value: "belly" },
         { text: "Pernas e glúteos", value: "legs" },
         { text: "Corpo todo, de forma equilibrada", value: "full_body" },
-        { text: "Não tenho preferência — quero o básico que funcione", value: "no_pref" },
+        {
+          text: "Não tenho preferência — quero o básico que funcione",
+          value: "no_pref",
+        },
       ],
     },
     {
@@ -31,9 +34,18 @@
       question: "Quando bate aquela fome de tarde, você costuma…",
       options: [
         { text: "Ir direto no que tiver na frente", value: "grab_whatever" },
-        { text: "Segurar até a janta (e ficar de mau humor)", value: "hold_grumpy" },
-        { text: "Tentar algo mais leve, quando lembro", value: "light_when_remember" },
-        { text: "Já tenho meus lanches favoritos na cabeça", value: "planned_snacks" },
+        {
+          text: "Segurar até a janta (e ficar de mau humor)",
+          value: "hold_grumpy",
+        },
+        {
+          text: "Tentar algo mais leve, quando lembro",
+          value: "light_when_remember",
+        },
+        {
+          text: "Já tenho meus lanches favoritos na cabeça",
+          value: "planned_snacks",
+        },
       ],
     },
     {
@@ -53,7 +65,10 @@
         { text: "Descansada — até que durmo bem", value: "rested" },
         { text: "Mais ou menos — depende do dia", value: "mixed" },
         { text: "Pesada — sono irregular ou curto", value: "tired" },
-        { text: "Nem lembro a última vez que acordei 100%", value: "exhausted" },
+        {
+          text: "Nem lembro a última vez que acordei 100%",
+          value: "exhausted",
+        },
       ],
     },
     {
@@ -78,7 +93,8 @@
     },
     {
       id: "past_attempts",
-      question: "Você já tentou dietas restritivas ou apps de emagrecimento antes?",
+      question:
+        "Você já tentou dietas restritivas ou apps de emagrecimento antes?",
       options: [
         { text: "Sim, várias vezes", value: "many" },
         { text: "Algumas vezes", value: "sometimes" },
@@ -123,14 +139,20 @@
         { text: "Família ou parceiro(a)", value: "family" },
         { text: "Amigas ou grupo de amigas", value: "friends" },
         { text: "Sozinha por enquanto — e tá tudo bem", value: "solo_ok" },
-        { text: "Quero apoio só do app, sem pressão de ninguém", value: "app_only" },
+        {
+          text: "Quero apoio só do app, sem pressão de ninguém",
+          value: "app_only",
+        },
       ],
     },
     {
       id: "micro_win",
       question: "Uma vitória pequena que vale comemorar: você prefere…",
       options: [
-        { text: "Ver o número na balança ou a roupa cair melhor", value: "scale_clothes" },
+        {
+          text: "Ver o número na balança ou a roupa cair melhor",
+          value: "scale_clothes",
+        },
         { text: "Sentir mais disposição no dia a dia", value: "energy" },
         { text: "Manter constância uma semana inteira", value: "consistency" },
         { text: "Não desistir depois de um dia ruim", value: "bounce_back" },
@@ -168,7 +190,7 @@
     var fn = w.fbq;
     if (typeof fn !== "function") {
       console.warn(
-        "[Pixel] fbq não encontrado — eventos não serão enviados. Causas comuns: bloqueador de anúncios (uBlock, Brave), extensão de privacidade, ou página aberta como file:// (use http://localhost ou HTTPS)."
+        "[Pixel] fbq não encontrado — eventos não serão enviados. Causas comuns: bloqueador de anúncios (uBlock, Brave), extensão de privacidade, ou página aberta como file:// (use http://localhost ou HTTPS).",
       );
       return;
     }
@@ -182,7 +204,9 @@
   function sendLeadToSheets(payload) {
     var endpoint = (window.LEAD_SHEETS_WEBHOOK_URL || "").trim();
     if (!endpoint) {
-      console.info("[Sheets] webhook não configurado; lead salvo apenas no pixel.");
+      console.info(
+        "[Sheets] webhook não configurado; lead salvo apenas no pixel.",
+      );
       return Promise.resolve({ skipped: true });
     }
 
@@ -203,11 +227,13 @@
   }
 
   function setProgress(phase) {
-    var total = QUIZ_STEPS.length + 2;
+    var total = QUIZ_STEPS.length + 3;
     var p = 0;
     if (phase === "loading") {
       p = Math.round(((QUIZ_STEPS.length + 1) / total) * 100);
     } else if (phase === "results") {
+      p = Math.round(((QUIZ_STEPS.length + 2) / total) * 100);
+    } else if (phase === "value") {
       p = 100;
     } else {
       p = Math.round(((stepIndex + 1) / total) * 100);
@@ -225,98 +251,111 @@
 
     if (g === "lose_weight") {
       paras.push(
-        "Pelas suas respostas, seu foco é emagrecer com mais leveza — sem viver de culpa a cada escapadinha. Isso combina com o desafio de 14 dias: hábitos curtos e repetíveis, não promessa de milagre da noite pro dia."
+        "Pelas suas respostas, seu foco é emagrecer com mais leveza — sem viver de culpa a cada escapadinha. Isso combina com o desafio de 14 dias: hábitos curtos e repetíveis, não promessa de milagre da noite pro dia.",
       );
     } else if (g === "tone_energy") {
       paras.push(
-        "Você quer definir o corpo e ganhar disposição. O perfil que você descreveu pede consistência leve — movimento e rotina que não dependam de academia o tempo todo."
+        "Você quer definir o corpo e ganhar disposição. O perfil que você descreveu pede consistência leve — movimento e rotina que não dependam de academia o tempo todo.",
       );
     } else if (g === "maintain") {
       paras.push(
-        "Manter o peso com hábitos melhores é um objetivo maduro: menos radicalismo, mais equilíbrio no dia a dia — exatamente o tom do nosso app de auxílio."
+        "Manter o peso com hábitos melhores é um objetivo maduro: menos radicalismo, mais equilíbrio no dia a dia — exatamente o tom do nosso app de auxílio.",
       );
     } else {
       paras.push(
-        "Organização e rotina são o centro pra você. Isso é ótimo: o desafio foi pensado pra encaixar no calendário, não o contrário."
+        "Organização e rotina são o centro pra você. Isso é ótimo: o desafio foi pensado pra encaixar no calendário, não o contrário.",
       );
     }
 
     if (a.body_focus === "belly") {
       paras.push(
-        "Você marcou barriga e cintura como foco — dá para trabalhar isso junto com hábitos gerais (movimento, refeições e lembretes), sem obsessão com balança todo dia."
+        "Você marcou barriga e cintura como foco — dá para trabalhar isso junto com hábitos gerais (movimento, refeições e lembretes), sem obsessão com balança todo dia.",
       );
     } else if (a.body_focus === "legs") {
       paras.push(
-        "Pernas e glúteos no radar: combinam bem com passos simples em casa e com o ritmo do desafio, sem precisar de equipamento caro."
+        "Pernas e glúteos no radar: combinam bem com passos simples em casa e com o ritmo do desafio, sem precisar de equipamento caro.",
       );
     }
 
-    if (a.snack_attack === "grab_whatever" || a.snack_attack === "hold_grumpy") {
+    if (
+      a.snack_attack === "grab_whatever" ||
+      a.snack_attack === "hold_grumpy"
+    ) {
       paras.push(
-        "Sobre a fome de tarde: não é falta de força de vontade — muitas vezes é falta de plano B. Com lembretes e sugestões no app, fica mais fácil quebrar o automático."
+        "Sobre a fome de tarde: não é falta de força de vontade — muitas vezes é falta de plano B. Com lembretes e sugestões no app, fica mais fácil quebrar o automático.",
       );
     }
 
     if (a.activity === "sedentary") {
       paras.push(
-        "Você passa bastante tempo sentada: qualquer movimento curto já conta. O desafio respeita poucos minutos por dia — justamente pra caber na correria."
+        "Você passa bastante tempo sentada: qualquer movimento curto já conta. O desafio respeita poucos minutos por dia — justamente pra caber na correria.",
       );
     }
 
     if (a.sleep === "tired" || a.sleep === "exhausted") {
       paras.push(
-        "Seu sono parece pesado ou irregular. Descanso melhor ajuda tudo o resto — inclusive decisões de comida; isso pode entrar como prioridade no seu acompanhamento."
+        "Seu sono parece pesado ou irregular. Descanso melhor ajuda tudo o resto — inclusive decisões de comida; isso pode entrar como prioridade no seu acompanhamento.",
       );
     }
 
     if (a.stress === "stress_eat") {
       paras.push(
-        "Quando o dia aperta, a comida vira válvula — é mais comum do que parece. Com apoio no app, dá para criar pausas antes do impulso."
+        "Quando o dia aperta, a comida vira válvula — é mais comum do que parece. Com apoio no app, dá para criar pausas antes do impulso.",
       );
     } else if (a.stress === "skip_meals") {
       paras.push(
-        "Em dias intensos você some do prato: vamos te ajudar a não ficar o dia inteiro no vácuo, com lembretes leves e sem terrorismo nutricional."
+        "Em dias intensos você some do prato: vamos te ajudar a não ficar o dia inteiro no vácuo, com lembretes leves e sem terrorismo nutricional.",
       );
     }
 
     if (a.time_daily === "under_15" || a.time_daily === "flex") {
       paras.push(
-        "Você foi clara sobre o tempo: poucos minutos ou dias diferentes. Esse desafio foi desenhado pra caber exatamente nesse tipo de realidade."
+        "Você foi clara sobre o tempo: poucos minutos ou dias diferentes. Esse desafio foi desenhado pra caber exatamente nesse tipo de realidade.",
       );
     }
 
     if (a.past_attempts === "many" || a.past_attempts === "sometimes") {
       paras.push(
-        "Você já tentou de tudo antes — então não falta garra, falta algo sustentável. Aqui o foco é continuidade e método, não culpa."
+        "Você já tentou de tudo antes — então não falta garra, falta algo sustentável. Aqui o foco é continuidade e método, não culpa.",
       );
     }
 
     if (a.motivation === "support" || a.motivation === "simple") {
       paras.push(
-        "Você valoriza apoio e coisas simples de seguir: o app entra como companhia no bolso — missões, lembretes e conversa com a assistente quando precisar."
+        "Você valoriza apoio e coisas simples de seguir: o app entra como companhia no bolso — missões, lembretes e conversa com a assistente quando precisar.",
       );
     }
 
     while (paras.length < 3) {
       paras.push(
-        "Suas respostas mostram que dá para evoluir com método: desafio de 14 dias, passos claros e auxílio direto quando você topar seguir com a gente no app."
+        "Suas respostas mostram que dá para evoluir com método: desafio de 14 dias, passos claros e auxílio direto quando você topar seguir com a gente no app.",
       );
       break;
     }
 
     var bullets = [];
-    bullets.push("Seu perfil combina com o desafio de 14 dias no app de auxílio.");
+    bullets.push(
+      "Seu perfil combina com o desafio de 14 dias no app de auxílio.",
+    );
     if (a.hydration === "low_forget" || a.hydration === "try_sometimes") {
-      bullets.push("Hidratação pode ser um dos primeiros hábitos fáceis de lembrar pelo app.");
+      bullets.push(
+        "Hidratação pode ser um dos primeiros hábitos fáceis de lembrar pelo app.",
+      );
     }
     if (a.food_vibe === "confused") {
-      bullets.push("Se a comida confunde, o próximo passo é orientação clara — sem lista maluca de proibidos.");
+      bullets.push(
+        "Se a comida confunde, o próximo passo é orientação clara — sem lista maluca de proibidos.",
+      );
     }
     if (a.ally === "solo_ok" || a.ally === "app_only") {
-      bullets.push("Mesmo com pouca rede por perto, você não fica sozinha: assistente e missões te puxam de volta ao eixo.");
+      bullets.push(
+        "Mesmo com pouca rede por perto, você não fica sozinha: assistente e missões te puxam de volta ao eixo.",
+      );
     }
     if (a.micro_win === "bounce_back" || a.micro_win === "consistency") {
-      bullets.push("Constância e “levantar depois de um dia ruim” são vitórias que o app reforça — pequeno a pequeno.");
+      bullets.push(
+        "Constância e “levantar depois de um dia ruim” são vitórias que o app reforça — pequeno a pequeno.",
+      );
     }
 
     var planNote =
@@ -334,7 +373,10 @@
   function renderQuestion() {
     var step = QUIZ_STEPS[stepIndex];
     track("quiz_step_view", { step: step.id, index: stepIndex });
-    pixelTrack("trackCustom", "QuizStepView", { step_id: step.id, step_index: stepIndex });
+    pixelTrack("trackCustom", "QuizStepView", {
+      step_id: step.id,
+      step_index: stepIndex,
+    });
 
     var html =
       '<div class="quiz-card">' +
@@ -391,7 +433,10 @@
     var step = QUIZ_STEPS[stepIndex];
     answers[step.id] = btn.getAttribute("data-value");
     track("quiz_answer", { step: step.id, value: answers[step.id] });
-    pixelTrack("trackCustom", "QuizAnswer", { step_id: step.id, value: answers[step.id] });
+    pixelTrack("trackCustom", "QuizAnswer", {
+      step_id: step.id,
+      value: answers[step.id],
+    });
 
     stepIndex += 1;
     if (stepIndex < QUIZ_STEPS.length) {
@@ -418,7 +463,7 @@
       '<div class="quiz-card quiz-card--loading">' +
       '<div class="quiz-spinner" aria-hidden="true"></div>' +
       '<h2 class="quiz-question">Analisando suas respostas…</h2>' +
-      '<p class="quiz-loading-text">Montando um resumo motivacional do seu perfil…</p>' +
+      '<p class="quiz-loading-text">Montando um resumo do seu perfil…</p>' +
       "</div>";
 
     window.setTimeout(function () {
@@ -443,7 +488,8 @@
 
     var pi;
     for (pi = 0; pi < data.paragraphs.length; pi++) {
-      html += '<p class="result-text">' + escapeHtml(data.paragraphs[pi]) + "</p>";
+      html +=
+        '<p class="result-text">' + escapeHtml(data.paragraphs[pi]) + "</p>";
     }
 
     html +=
@@ -463,8 +509,8 @@
       escapeHtml(data.planNote) +
       "</p>" +
       "</div>" +
-      '<button type="button" class="btn btn--primary btn--large btn--block quiz-interest" id="quiz-tenho-interesse">' +
-      "Quero receber como continuar" +
+      '<button type="button" class="btn btn--primary btn--large btn--block quiz-interest" id="quiz-after-results">' +
+      "Continuar" +
       "</button>" +
       "</div>";
 
@@ -476,10 +522,107 @@
       root.scrollIntoView(true);
     }
 
-    document.getElementById("quiz-tenho-interesse").addEventListener("click", function () {
+    document
+      .getElementById("quiz-after-results")
+      .addEventListener("click", function () {
+        track("quiz_results_continue", { answers: answers });
+        pixelTrack("trackCustom", "QuizResultsContinue", {});
+        renderValueScreen();
+      });
+  }
+
+  function renderValueScreen() {
+    track("quiz_value_view", { answers: answers });
+    pixelTrack("trackCustom", "QuizValueView", {});
+
+    var intro =
+      "Nosso <strong>app de auxílio</strong> acompanha você no <strong>desafio de 14 dias</strong>: são " +
+      "<strong>missões diárias</strong> simples, pensadas para a sua rotina, com <strong>assistente virtual</strong> para dúvidas, " +
+      "lembretes e aquele empurrão quando a vida aperta — sem promessa de milagre, mas com método e consistência. " +
+      "Investir em <strong>conhecimento e saúde</strong> costuma ser o que sustenta resultado de verdade no longo prazo; " +
+      "o app existe para agregar valor nesse caminho, no seu ritmo.";
+
+    var foot =
+      "Sua opinião nos ajuda a entender o que faz sentido para você. O campo abaixo é opcional — use se quiser deixar uma observação.";
+
+    var prices = [
+      { label: "R$ 9", value: "9" },
+      { label: "R$ 12", value: "12" },
+      { label: "R$ 15", value: "15" },
+      { label: "R$ 20", value: "20" },
+    ];
+
+    var html =
+      '<div class="quiz-card quiz-card--value">' +
+      '<p class="quiz-step-label">Quase lá</p>' +
+      '<h2 class="quiz-question quiz-question--value">Quanto você acha que vale uma aplicação como essa?</h2>' +
+      '<div class="quiz-value-intro">' +
+      intro +
+      "</div>" +
+      '<p class="quiz-value-ask">Toque no valor que mais se aproxima do que você consideraria justo por mês (referência):</p>' +
+      '<div class="quiz-value-options" role="group" aria-label="Valor percebido">';
+
+    var vi;
+    for (vi = 0; vi < prices.length; vi++) {
+      html +=
+        '<button type="button" class="quiz-value-btn" data-value="' +
+        escapeAttr(prices[vi].value) +
+        '">' +
+        escapeHtml(prices[vi].label) +
+        "</button>";
+    }
+
+    html +=
+      "</div>" +
+      '<p class="quiz-value-disclaimer">Você não está assinando nada ainda, é só pra gente estimar</p>' +
+      '<label class="field field--block">' +
+      '<span class="field__label">Observação (opcional)</span>' +
+      '<textarea name="value_note" class="field__textarea" id="value-note" rows="3" maxlength="500" placeholder="Quer contar algo sobre sua rotina ou expectativa?"></textarea>' +
+      "</label>" +
+      '<p class="quiz-value-footnote">' +
+      escapeHtml(foot) +
+      "</p>" +
+      '<button type="button" class="btn btn--primary btn--large btn--block quiz-interest" id="quiz-tenho-interesse" disabled>' +
+      "Quero receber como continuar" +
+      "</button>" +
+      "</div>";
+
+    root.innerHTML = html;
+    setProgress("value");
+    try {
+      root.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (e2) {
+      root.scrollIntoView(true);
+    }
+
+    var priceBtns = root.querySelectorAll(".quiz-value-btn");
+    var continueBtn = document.getElementById("quiz-tenho-interesse");
+    var noteEl = document.getElementById("value-note");
+
+    for (var bi = 0; bi < priceBtns.length; bi++) {
+      priceBtns[bi].addEventListener("click", function (ev) {
+        var b = ev.currentTarget;
+        var val = b.getAttribute("data-value");
+        answers.perceived_value_brl = val;
+        for (var k = 0; k < priceBtns.length; k++) {
+          priceBtns[k].classList.remove("quiz-value-btn--selected");
+        }
+        b.classList.add("quiz-value-btn--selected");
+        continueBtn.disabled = false;
+        track("quiz_value_selected", { value: val });
+        pixelTrack("trackCustom", "QuizValueSelected", { value: val });
+      });
+    }
+
+    continueBtn.addEventListener("click", function () {
+      if (!answers.perceived_value_brl) {
+        alert("Escolha um dos valores (R$ 9 a R$ 20) para continuar.");
+        return;
+      }
+      answers.value_note = (noteEl && noteEl.value) ? noteEl.value.trim() : "";
       track("quiz_interest_click", { answers: answers });
       pixelTrack("trackCustom", "QuizInterest", {});
-      openModal("results");
+      openModal("value");
     });
   }
 
@@ -515,13 +658,14 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var email = (form.elements.email && form.elements.email.value) || "";
-      var whatsapp = (form.elements.whatsapp && form.elements.whatsapp.value) || "";
+      var whatsapp =
+        (form.elements.whatsapp && form.elements.whatsapp.value) || "";
       var emailTrim = email.trim();
       var waTrim = whatsapp.trim();
 
-      if (!emailTrim && !waTrim) {
-        track("lead_submit_blocked", { reason: "empty" });
-        alert("Informe seu e-mail ou WhatsApp.");
+      if (!emailTrim || !waTrim) {
+        track("lead_submit_blocked", { reason: "incomplete" });
+        alert("Preencha e-mail e WhatsApp — os dois são obrigatórios.");
         return;
       }
 
@@ -538,13 +682,15 @@
         value: 1,
       });
       console.info(
-        "[Pixel] Evento Lead enviado para a fila do pixel. Confira em: Events Manager → Testar eventos (ou aguarde alguns minutos no relatório)."
+        "[Pixel] Evento Lead enviado para a fila do pixel. Confira em: Events Manager → Testar eventos (ou aguarde alguns minutos no relatório).",
       );
 
       var leadPayload = {
         createdAt: new Date().toISOString(),
-        email: emailTrim || "",
-        whatsapp: waTrim || "",
+        email: emailTrim,
+        whatsapp: waTrim,
+        perceivedValueBrl: answers.perceived_value_brl || "",
+        valueNote: answers.value_note || "",
         quizAnswers: answers,
         source: "quiz-desafio-14-dias",
         pageUrl: window.location.href,
@@ -564,11 +710,11 @@
   window.addEventListener("load", function () {
     if (typeof window.fbq !== "function") {
       console.warn(
-        "[Pixel] Após o carregamento: fbq ainda ausente. Sem o script connect.facebook.net, leads não contam no Meta."
+        "[Pixel] Após o carregamento: fbq ainda ausente. Sem o script connect.facebook.net, leads não contam no Meta.",
       );
     } else {
       console.info(
-        "[Pixel] Script do Meta carregado. O evento Lead só aparece depois de enviar o formulário com e-mail ou WhatsApp."
+        "[Pixel] Script do Meta carregado. O evento Lead só aparece depois de enviar o formulário com e-mail e WhatsApp.",
       );
     }
   });

@@ -421,6 +421,126 @@ body {
   margin-top: 0.5rem;
 }
 
+/* Tela “quanto vale” (após resultados) */
+.quiz-card--value {
+  text-align: left;
+}
+
+.quiz-question--value {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.quiz-value-intro {
+  margin: 0 0 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.quiz-value-intro strong {
+  color: #44403c;
+  font-weight: 600;
+}
+
+.quiz-value-ask {
+  margin: 0 0 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+}
+
+.quiz-value-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 400px) {
+  .quiz-value-options {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.quiz-value-btn {
+  min-height: 48px;
+  padding: 0.5rem 0.35rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--text);
+  background: #fafaf9;
+  border: 2px solid #e7e5e4;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.quiz-value-btn:hover {
+  border-color: var(--accent);
+  background: #f0fdfa;
+}
+
+.quiz-value-btn--selected {
+  border-color: var(--accent);
+  background: #ccfbf1;
+  color: #0f766e;
+}
+
+.field--block {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.field__textarea {
+  width: 100%;
+  min-height: 88px;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  line-height: 1.45;
+  border: 1px solid #d6d3d1;
+  border-radius: var(--radius-sm);
+  background: #fafaf9;
+  resize: vertical;
+}
+
+.field__textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--ring);
+  background: #fff;
+}
+
+.quiz-value-disclaimer {
+  margin: 0 0 1rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  color: #b46565;
+  background: #fdf2f2;
+  border-radius: var(--radius-sm);
+  border: 1px solid #f5d5d5;
+}
+
+.quiz-value-footnote {
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #78716c;
+  text-align: center;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
 /* Hero */
 .hero {
   padding: clamp(1.5rem, 6vw, 2.5rem) 0 clamp(2rem, 8vw, 3rem);
