@@ -173,6 +173,18 @@
   var answers = {};
   var stepIndex = 0;
   var root = document.getElementById("quiz-root");
+
+  /** Só IDs dos passos do quiz — evita misturar checkout_plan / campos de telas antigas na planilha. */
+  function buildQuizAnswersForSheet(answersObj) {
+    var out = {};
+    for (var i = 0; i < QUIZ_STEPS.length; i++) {
+      var id = QUIZ_STEPS[i].id;
+      if (Object.prototype.hasOwnProperty.call(answersObj, id)) {
+        out[id] = answersObj[id];
+      }
+    }
+    return out;
+  }
   var progressBar = document.getElementById("quiz-progress-bar");
   var modal = document.getElementById("lead-modal");
   var form = document.getElementById("lead-form");
@@ -233,7 +245,7 @@
       p = Math.round(((QUIZ_STEPS.length + 1) / total) * 100);
     } else if (phase === "results") {
       p = Math.round(((QUIZ_STEPS.length + 2) / total) * 100);
-    } else if (phase === "value") {
+    } else if (phase === "plans") {
       p = 100;
     } else {
       p = Math.round(((stepIndex + 1) / total) * 100);
@@ -251,7 +263,7 @@
 
     if (g === "lose_weight") {
       paras.push(
-        "Pelas suas respostas, seu foco é emagrecer com mais leveza — sem viver de culpa a cada escapadinha. Isso combina com o desafio de 14 dias: hábitos curtos e repetíveis, não promessa de milagre da noite pro dia.",
+        "Pelas suas respostas, seu foco é emagrecer com mais leveza — sem viver de culpa a cada escapadinha. Isso combina com o desafio de 30 dias: hábitos curtos e repetíveis, não promessa de milagre da noite pro dia.",
       );
     } else if (g === "tone_energy") {
       paras.push(
@@ -328,14 +340,14 @@
 
     while (paras.length < 3) {
       paras.push(
-        "Suas respostas mostram que dá para evoluir com método: desafio de 14 dias, passos claros e auxílio direto quando você topar seguir com a gente no app.",
+        "Suas respostas mostram que dá para evoluir com método: desafio de 30 dias, passos claros e auxílio direto quando você topar seguir com a gente no app.",
       );
       break;
     }
 
     var bullets = [];
     bullets.push(
-      "Seu perfil combina com o desafio de 14 dias no app de auxílio.",
+      "Seu perfil combina com o desafio de 30 dias no app de auxílio.",
     );
     if (a.hydration === "low_forget" || a.hydration === "try_sometimes") {
       bullets.push(
@@ -359,7 +371,7 @@
     }
 
     var planNote =
-      "Para ter auxílio direto — conversa com a assistente, missões do dia e acompanhamento dentro do app — é preciso seguir com a gente por um plano acessível. Os valores e como contratar você confere com a equipe no próximo passo; fazer o quiz não te obriga a nada.";
+      "No próximo passo você informa contato e segue para o pagamento seguro (assinatura) para liberar o app de auxílio, as missões e a assistente. Fazer o quiz não te obriga a nada até você concluir o checkout.";
 
     return {
       headline: "Seu perfil combina com quem pode evoluir com consistência",
@@ -510,7 +522,7 @@
       "</p>" +
       "</div>" +
       '<button type="button" class="btn btn--primary btn--large btn--block quiz-interest" id="quiz-after-results">' +
-      "Continuar" +
+      "Escolher meu plano" +
       "</button>" +
       "</div>";
 
@@ -527,102 +539,86 @@
       .addEventListener("click", function () {
         track("quiz_results_continue", { answers: answers });
         pixelTrack("trackCustom", "QuizResultsContinue", {});
-        renderValueScreen();
+        renderPlanScreen();
       });
   }
 
-  function renderValueScreen() {
-    track("quiz_value_view", { answers: answers });
-    pixelTrack("trackCustom", "QuizValueView", {});
-
-    var intro =
-      "Nosso <strong>app de auxílio</strong> acompanha você no <strong>desafio de 14 dias</strong>: são " +
-      "<strong>missões diárias</strong> simples, pensadas para a sua rotina, com <strong>assistente virtual</strong> para dúvidas, " +
-      "lembretes e aquele empurrão quando a vida aperta — sem promessa de milagre, mas com método e consistência. " +
-      "Investir em <strong>conhecimento e saúde</strong> costuma ser o que sustenta resultado de verdade no longo prazo; " +
-      "o app existe para agregar valor nesse caminho, no seu ritmo.";
-
-    var foot =
-      "Sua opinião nos ajuda a entender o que faz sentido para você. O campo abaixo é opcional — use se quiser deixar uma observação.";
-
-    var prices = [
-      { label: "R$ 9", value: "9" },
-      { label: "R$ 12", value: "12" },
-      { label: "R$ 15", value: "15" },
-      { label: "R$ 20", value: "20" },
-    ];
+  function renderPlanScreen() {
+    track("quiz_plans_view", { answers: answers });
+    pixelTrack("trackCustom", "QuizPlansView", {});
 
     var html =
-      '<div class="quiz-card quiz-card--value">' +
-      '<p class="quiz-step-label">Quase lá</p>' +
-      '<h2 class="quiz-question quiz-question--value">Quanto você acha que vale uma aplicação como essa?</h2>' +
-      '<div class="quiz-value-intro">' +
-      intro +
+      '<div class="quiz-card quiz-card--plans">' +
+      '<p class="quiz-step-label">Planos</p>' +
+      '<h2 class="quiz-question quiz-question--plans">Escolha seu plano</h2>' +
+      '<p class="quiz-plans-intro">Assinatura mensal com acesso ao desafio de 30 dias no app. Cancele quando quiser.</p>' +
+      '<div class="quiz-plans-grid" role="radiogroup" aria-label="Planos">' +
+      '<button type="button" class="quiz-plan-card" data-plan="standard" aria-pressed="false">' +
+      '<span class="quiz-plan-card__badge">Mais acessível</span>' +
+      '<span class="quiz-plan-card__title">Essencial</span>' +
+      '<span class="quiz-plan-card__price">R$ 30<span>/mês</span></span>' +
+      '<ul class="quiz-plan-card__list">' +
+      "<li>Começa com o desafio de 30 dias; depois os desafios <strong>se renovam</strong> — a jornada continua.</li>" +
+      "<li>Fluxo <strong>infinito</strong> de novos desafios, sempre evoluindo.</li>" +
+      "<li>A experiência <strong>vai melhorando</strong> com o tempo, no seu ritmo.</li>" +
+      "</ul>" +
+      "</button>" +
+      '<button type="button" class="quiz-plan-card quiz-plan-card--featured" data-plan="ai" aria-pressed="false">' +
+      '<span class="quiz-plan-card__badge quiz-plan-card__badge--featured">Recomendado</span>' +
+      '<span class="quiz-plan-card__title">Com IA auxiliar</span>' +
+      '<span class="quiz-plan-card__price">R$ 50<span>/mês</span></span>' +
+      '<ul class="quiz-plan-card__list">' +
+      "<li>Tudo do Essencial</li>" +
+      "<li><strong>Assistente com IA</strong> para dúvidas e motivação</li>" +
+      "<li>Conversas ilimitadas no período ativo</li>" +
+      "</ul>" +
+      "</button>" +
       "</div>" +
-      '<p class="quiz-value-ask">Toque no valor que mais se aproxima do que você consideraria justo por mês (referência):</p>' +
-      '<div class="quiz-value-options" role="group" aria-label="Valor percebido">';
-
-    var vi;
-    for (vi = 0; vi < prices.length; vi++) {
-      html +=
-        '<button type="button" class="quiz-value-btn" data-value="' +
-        escapeAttr(prices[vi].value) +
-        '">' +
-        escapeHtml(prices[vi].label) +
-        "</button>";
-    }
-
-    html +=
-      "</div>" +
-      '<p class="quiz-value-disclaimer">Você não está assinando nada ainda, é só pra gente estimar</p>' +
-      '<label class="field field--block">' +
-      '<span class="field__label">Observação (opcional)</span>' +
-      '<textarea name="value_note" class="field__textarea" id="value-note" rows="3" maxlength="500" placeholder="Quer contar algo sobre sua rotina ou expectativa?"></textarea>' +
-      "</label>" +
-      '<p class="quiz-value-footnote">' +
-      escapeHtml(foot) +
-      "</p>" +
-      '<button type="button" class="btn btn--primary btn--large btn--block quiz-interest" id="quiz-tenho-interesse" disabled>' +
-      "Quero receber como continuar" +
+      '<p class="quiz-plans-footnote">Valores meramente ilustrativos; o valor final é confirmado no checkout seguro (Stripe).</p>' +
+      '<button type="button" class="btn btn--primary btn--large btn--block" id="quiz-plans-continue" disabled>' +
+      "Continuar para cadastro" +
       "</button>" +
       "</div>";
 
     root.innerHTML = html;
-    setProgress("value");
+    setProgress("plans");
     try {
       root.scrollIntoView({ behavior: "smooth", block: "start" });
-    } catch (e2) {
+    } catch (e) {
       root.scrollIntoView(true);
     }
 
-    var priceBtns = root.querySelectorAll(".quiz-value-btn");
-    var continueBtn = document.getElementById("quiz-tenho-interesse");
-    var noteEl = document.getElementById("value-note");
+    var cards = root.querySelectorAll(".quiz-plan-card");
+    var continueBtn = document.getElementById("quiz-plans-continue");
 
-    for (var bi = 0; bi < priceBtns.length; bi++) {
-      priceBtns[bi].addEventListener("click", function (ev) {
-        var b = ev.currentTarget;
-        var val = b.getAttribute("data-value");
-        answers.perceived_value_brl = val;
-        for (var k = 0; k < priceBtns.length; k++) {
-          priceBtns[k].classList.remove("quiz-value-btn--selected");
-        }
-        b.classList.add("quiz-value-btn--selected");
-        continueBtn.disabled = false;
-        track("quiz_value_selected", { value: val });
-        pixelTrack("trackCustom", "QuizValueSelected", { value: val });
+    function selectPlan(plan) {
+      answers.checkout_plan = plan;
+      for (var i = 0; i < cards.length; i++) {
+        var c = cards[i];
+        var isOn = c.getAttribute("data-plan") === plan;
+        c.classList.toggle("quiz-plan-card--selected", isOn);
+        c.setAttribute("aria-pressed", isOn ? "true" : "false");
+      }
+      continueBtn.disabled = false;
+      track("quiz_plan_selected", { plan: plan });
+      pixelTrack("trackCustom", "QuizPlanSelected", { plan: plan });
+    }
+
+    for (var j = 0; j < cards.length; j++) {
+      cards[j].addEventListener("click", function (ev) {
+        var plan = ev.currentTarget.getAttribute("data-plan");
+        if (plan) selectPlan(plan);
       });
     }
 
     continueBtn.addEventListener("click", function () {
-      if (!answers.perceived_value_brl) {
-        alert("Escolha um dos valores (R$ 9 a R$ 20) para continuar.");
+      if (!answers.checkout_plan) {
+        alert("Selecione um dos planos para continuar.");
         return;
       }
-      answers.value_note = (noteEl && noteEl.value) ? noteEl.value.trim() : "";
-      track("quiz_interest_click", { answers: answers });
-      pixelTrack("trackCustom", "QuizInterest", {});
-      openModal("value");
+      track("quiz_plans_continue", { plan: answers.checkout_plan });
+      pixelTrack("trackCustom", "QuizPlansContinue", { plan: answers.checkout_plan });
+      openModal("plans");
     });
   }
 
@@ -679,27 +675,29 @@
         return;
       }
 
+      var planTier = answers.checkout_plan === "ai" ? "ai" : "standard";
+
       track("lead_submit", {
         hasEmail: !!emailTrim,
         hasWhatsapp: !!waTrim,
+        plan: planTier,
         quiz_answers: answers,
       });
 
       pixelTrack("track", "Lead", {
-        content_name: "Quiz desafio 14 dias",
+        content_name: "Quiz desafio 30 dias",
         currency: "BRL",
-        value: 1,
+        value: planTier === "ai" ? 50 : 30,
       });
 
+      var quizForSheet = buildQuizAnswersForSheet(answers);
+      // Ordem fixa para planilha / Apps Script (Object key order no JSON.stringify).
       var leadPayload = {
         createdAt: new Date().toISOString(),
         email: emailTrim,
-        name: nameTrim,
         whatsapp: waTrim,
-        perceivedValueBrl: answers.perceived_value_brl || "",
-        valueNote: answers.value_note || "",
-        quizAnswers: answers,
-        source: "quiz-desafio-14-dias",
+        quizAnswers: quizForSheet,
+        source: "quiz-desafio-30-dias",
         pageUrl: window.location.href,
         userAgent: navigator.userAgent,
       };
@@ -714,11 +712,15 @@
 
       fetch(apiBase + "/api/v1/checkout/session", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
           email: emailTrim,
           name: nameTrim || emailTrim.split("@")[0],
           whatsapp: waTrim,
+          plan: planTier,
           quizAnswers: answers,
         }),
       })

@@ -74,6 +74,7 @@
       var createdAt = lead.createdAt || lead.created_at || "";
       var value = lead.perceivedValueBrl || lead.perceived_value_brl || "";
       var valueNote = lead.valueNote || lead.value_note || "";
+      var checkoutPlan = lead.checkoutPlan || lead.checkout_plan || "";
 
       var detailsId = "lead_details_" + i + "_" + String(Date.now()).slice(-6);
 
@@ -84,6 +85,11 @@
         '    <div class="lead-card__whatsapp" title="' + escapeHtml(whatsapp) + '">' +
         escapeHtml(whatsapp || "Sem WhatsApp") +
         " </div>" +
+        (checkoutPlan
+          ? '<div class="lead-card__plan">' +
+            escapeHtml(checkoutPlan === "ai" ? "Plano IA (R$ 50)" : "Plano essencial (R$ 30)") +
+            "</div>"
+          : "") +
         (value ? '<div class="lead-card__value">R$ ' + escapeHtml(String(value)) + "</div>" : "") +
         (valueNote ? '<div class="lead-card__note">' + escapeHtml(valueNote) + "</div>" : "") +
         "  </div>" +

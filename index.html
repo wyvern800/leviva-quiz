@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Quiz rápido: descubra como o desafio de 14 dias e o app de auxílio podem se encaixar na sua rotina. Conteúdo educativo."
+      content="Quiz rápido: descubra como o desafio de 30 dias e o app de auxílio podem se encaixar na sua rotina. Conteúdo educativo."
     />
-    <title>Quiz — desafio de 14 dias · app de auxílio</title>
+    <title>Quiz — desafio de 30 dias · app de auxílio</title>
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
@@ -41,7 +41,7 @@
     </div>
 
     <main class="page page--quiz">
-      <p class="quiz-brand">Desafio de 14 dias · app de auxílio</p>
+      <p class="quiz-brand">Desafio de 30 dias · app de auxílio</p>
       <div class="quiz-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do quiz">
         <div class="quiz-progress__bar" id="quiz-progress-bar"></div>
       </div>
@@ -53,7 +53,7 @@
       <div class="modal__panel">
         <button type="button" class="modal__close js-close-modal" aria-label="Fechar">&times;</button>
         <h2 id="modal-title" class="modal__title">Seus dados e pagamento</h2>
-        <p class="modal__hint">Preencha e-mail e WhatsApp. Em seguida você será levada ao checkout seguro (Stripe) para ativar o acesso ao app.</p>
+        <p class="modal__hint">Você já escolheu o plano acima. Preencha e-mail e WhatsApp; em seguida abrimos o checkout seguro (Stripe) com o valor do plano selecionado.</p>
         <form class="lead-form" id="lead-form">
           <label class="field">
             <span class="field__label">Nome</span>
@@ -102,8 +102,8 @@
       fbq("track", "PageView");
     </script>
     <script>
-      /** URL base da API Leviva (sem barra no final). Ex.: https://leviva-api-production.up.railway.app */
-      window.LEVIVA_API_URL = "https://leviva-api-production.up.railway.app";
+      /** URL base da API Leviva (sem barra no final). Local = http (não https). Produção = https://sua-api.up.railway.app */
+      window.LEVIVA_API_URL = "http://localhost:3001";
       window.LEAD_SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzmD1yWbkxVU4d_4GROmJ16un6IrjO-7pcbpQjgDMdn2khQQKky_cXHvJcGfBPfQIY4/exec";
     </script>
     <script src="https://cdn.jsdelivr.net/npm/trianglify@4.1.1/dist/trianglify.bundle.js"></script>

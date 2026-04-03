@@ -421,6 +421,128 @@ body {
   margin-top: 0.5rem;
 }
 
+.quiz-card--plans {
+  text-align: left;
+}
+
+.quiz-question--plans {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-plans-intro {
+  margin: 0 0 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.quiz-plans-grid {
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 520px) {
+  .quiz-plans-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+.quiz-plan-card {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 1rem 1rem 1.1rem;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--text);
+  background: #fafaf9;
+  border: 2px solid #e7e5e4;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.quiz-plan-card:hover {
+  border-color: #99f6e4;
+  background: #f0fdfa;
+}
+
+.quiz-plan-card--selected {
+  border-color: var(--accent);
+  background: #ecfdf5;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.quiz-plan-card--featured {
+  position: relative;
+}
+
+.quiz-plan-card__badge {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #57534e;
+  background: #e7e5e4;
+  border-radius: 999px;
+}
+
+.quiz-plan-card__badge--featured {
+  color: #fff;
+  background: var(--accent);
+}
+
+.quiz-plan-card__title {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: #1c1917;
+}
+
+.quiz-plan-card__price {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.quiz-plan-card__price span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.quiz-plan-card__list {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: #44403c;
+  font-size: 0.875rem;
+}
+
+.quiz-plan-card__list li {
+  margin-bottom: 0.35rem;
+}
+
+.quiz-plans-footnote {
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #78716c;
+  text-align: center;
+}
+
 /* Tela “quanto vale” (após resultados) */
 .quiz-card--value {
   text-align: left;
