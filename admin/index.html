@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Painel de Leads - Marketing</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../styles.css" />
     <style>
       /* estilos pequenos só para o painel; mantém o projeto sem framework */
       .admin-wrap {
@@ -150,6 +150,24 @@
         color: var(--text-muted);
         font-size: 0.85rem;
       }
+      .admin-token-panel {
+        max-width: 24rem;
+        padding: 1rem;
+        background: #fafaf9;
+        border: 1px solid #e7e5e4;
+        border-radius: var(--radius-sm);
+        margin-bottom: 1rem;
+      }
+      .admin-token-panel p {
+        margin: 0 0 0.75rem;
+        font-size: 0.875rem;
+        color: var(--text-muted);
+      }
+      .admin-token-panel input {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 0.5rem;
+      }
     </style>
   </head>
   <body>
@@ -159,6 +177,22 @@
     </div>
 
     <main class="admin-wrap">
+      <div id="admin-token-panel" class="admin-token-panel" hidden>
+        <p>
+          Informe o mesmo valor de <strong>LEADS_ADMIN_TOKEN</strong> da API (ou abra uma vez com
+          <code>?token=SUA_CHAVE</code> na URL).
+        </p>
+        <label class="field__label" for="admin-token-input">Token</label>
+        <input
+          type="password"
+          id="admin-token-input"
+          class="field__input"
+          placeholder="Cole o token"
+          autocomplete="current-password"
+        />
+        <button type="button" class="btn btn--primary btn--block" id="admin-token-submit">Entrar</button>
+      </div>
+
       <div class="admin-header">
         <div>
           <div class="admin-title">Painel de Leads (Marketing)</div>
@@ -176,11 +210,10 @@
     </main>
 
     <script>
-      /** API Leviva — GET /api/v1/leads?token= (env LEADS_ADMIN_TOKEN na API) */
+      /** API Leviva — GET /api/v1/leads?token=... (mesmo valor que LEADS_ADMIN_TOKEN na API) */
       window.LEVIVA_API_URL = "http://localhost:3001";
-      window.ADMIN_TOKEN = "septox2026";
     </script>
-    <script src="admin.js" defer></script>
+    <script src="../admin.js" defer></script>
   </body>
 </html>
 

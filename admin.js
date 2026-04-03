@@ -7,11 +7,34 @@
   var refreshBtn = document.getElementById("admin-refresh");
 
   var apiBase = (window.LEVIVA_API_URL || "").trim().replace(/\/+$/, "");
-  var expectedToken = (window.ADMIN_TOKEN || "").trim();
+  var TOKEN_STORAGE_KEY = "leviva_leads_admin_token";
 
-  function getTokenFromQuery() {
+  var tokenPanel = document.getElementById("admin-token-panel");
+  var tokenInput = document.getElementById("admin-token-input");
+  var tokenSubmit = document.getElementById("admin-token-submit");
+
+  /** Query ?token= ou sessionStorage (validação real é na API). */
+  function getEffectiveToken() {
     var params = new URLSearchParams(window.location.search || "");
-    return (params.get("token") || "").trim();
+    var q = (params.get("token") || "").trim();
+    if (q) return q;
+    try {
+      return (sessionStorage.getItem(TOKEN_STORAGE_KEY) || "").trim();
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function persistToken(token) {
+    try {
+      sessionStorage.setItem(TOKEN_STORAGE_KEY, token);
+    } catch (e) {
+      console.warn("[admin] sessionStorage indisponível:", e);
+    }
+  }
+
+  function showTokenPanel(show) {
+    if (tokenPanel) tokenPanel.hidden = !show;
   }
 
   function formatDate(isoOrAny) {
@@ -121,15 +144,19 @@
   async function loadLeads() {
     if (!apiBase) {
       setStatus("Configure window.LEVIVA_API_URL no admin.html.");
+      showTokenPanel(false);
       return;
     }
 
-    var token = getTokenFromQuery();
-    if (!token || token !== expectedToken) {
-      setStatus("Acesso negado. Abra com ?token=SUA_CHAVE (igual ao LEADS_ADMIN_TOKEN na API).");
+    var token = getEffectiveToken();
+    if (!token) {
+      setStatus("Informe o token abaixo (o mesmo LEADS_ADMIN_TOKEN da API).");
+      showTokenPanel(true);
+      if (tokenInput) tokenInput.focus();
       return;
     }
 
+    showTokenPanel(false);
     setStatus("Carregando leads...");
 
     var url =
@@ -150,6 +177,7 @@
       }
       var leads = body.data && body.data.leads ? body.data.leads : [];
       allLeads = Array.isArray(leads) ? leads : [];
+      persistToken(token);
       setStatus("Leads carregados: " + allLeads.length);
       render(allLeads);
     } catch (err) {
